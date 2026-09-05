@@ -499,6 +499,1780 @@
 
 // Another one
 
+// import React, { useRef, useState } from 'react';
+
+// import {
+//     StyleSheet,
+//     Text,
+//     View,
+//     Image,
+//     Pressable,
+//     Dimensions,
+//     Animated,
+//     Easing,
+// } from 'react-native';
+
+// import {
+//     SafeAreaProvider,
+//     SafeAreaView,
+// } from 'react-native-safe-area-context';
+
+
+// const { width, height } = Dimensions.get('window');
+
+
+// // =========================
+// // CARD DATA
+// // =========================
+
+// const CARD_DATA = [
+//     {
+//         id: 1,
+//         title: 'Food One',
+//         description:
+//             'এখানে আপনার প্রথম কার্ডের বিস্তারিত ডেসক্রিপশন থাকবে। আপনি রিয়েক্ট ন্যাটিভ দিয়ে চমৎকার ইউজার এক্সপিরিয়েন্স তৈরি করছেন।',
+//         imageUrl: require('../assets/bcimage.jpeg'),
+//     },
+
+//     {
+//         id: 2,
+//         title: 'Food Two',
+//         description:
+//             'এটি দ্বিতীয় কার্ডের ডেসক্রিপশন। ডাবল ট্যাপ বা লং প্রেস করার কারণে আপনি এই কন্টেন্টটি দেখতে পাচ্ছেন।',
+//         imageUrl: require('../assets/natureimages.jpeg'),
+//     },
+
+//     {
+//         id: 3,
+//         title: 'Food Three',
+//         description:
+//             'চমৎকার! আপনি সফলভাবে তৃতীয় কার্ডে চলে এসেছেন। ডাটা শেষ হয়ে গেলে এটি আবার প্রথম কার্ডে ফিরে যাবে।',
+//         imageUrl: require('../assets/skyimages.jpeg'),
+//     },
+
+//     {
+//         id: 4,
+//         title: 'Food Four',
+//         description:
+//             'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+//         imageUrl: require('../assets/hillnatureimages.jpeg'),
+//     },
+// ];
+
+
+// export default function App() {
+
+//     const [currentIndex, setCurrentIndex] = useState(0);
+
+//     const currentCard = CARD_DATA[currentIndex];
+
+
+//     // =========================
+//     // ANIMATION VALUES
+//     // =========================
+
+//     const fadeAnim = useRef(
+//         new Animated.Value(1)
+//     ).current;
+
+//     const scaleAnim = useRef(
+//         new Animated.Value(1)
+//     ).current;
+
+//     const translateXAnim = useRef(
+//         new Animated.Value(0)
+//     ).current;
+
+
+//     // Card press animation
+//     const pressScale = useRef(
+//         new Animated.Value(1)
+//     ).current;
+
+
+//     // Double tap timer
+//     // const lastTap = useRef(null).current;
+//     const lastTap = useRef(null);
+
+
+//     // =========================
+//     // CHANGE CARD ANIMATION
+//     // =========================
+
+//     const changeCard = () => {
+
+//         // First: animate current card out
+//         Animated.parallel([
+
+//             Animated.timing(fadeAnim, {
+//                 toValue: 0,
+//                 duration: 180,
+//                 easing: Easing.out(Easing.ease),
+//                 useNativeDriver: true,
+//             }),
+
+//             Animated.timing(scaleAnim, {
+//                 toValue: 0.92,
+//                 duration: 180,
+//                 easing: Easing.out(Easing.ease),
+//                 useNativeDriver: true,
+//             }),
+
+//             Animated.timing(translateXAnim, {
+//                 toValue: -40,
+//                 duration: 180,
+//                 easing: Easing.out(Easing.ease),
+//                 useNativeDriver: true,
+//             }),
+
+//         ]).start(() => {
+
+//             // Change card
+//             setCurrentIndex(
+//                 prevIndex =>
+//                     prevIndex === CARD_DATA.length - 1
+//                         ? 0
+//                         : prevIndex + 1
+//             );
+
+
+//             // Prepare new card
+//             translateXAnim.setValue(40);
+//             scaleAnim.setValue(0.92);
+
+
+//             // Animate new card in
+//             Animated.parallel([
+
+//                 Animated.timing(fadeAnim, {
+//                     toValue: 1,
+//                     duration: 350,
+//                     easing: Easing.out(Easing.cubic),
+//                     useNativeDriver: true,
+//                 }),
+
+//                 Animated.spring(scaleAnim, {
+//                     toValue: 1,
+//                     friction: 7,
+//                     tension: 50,
+//                     useNativeDriver: true,
+//                 }),
+
+//                 Animated.timing(translateXAnim, {
+//                     toValue: 0,
+//                     duration: 350,
+//                     easing: Easing.out(Easing.cubic),
+//                     useNativeDriver: true,
+//                 }),
+
+//             ]).start();
+
+//         });
+//     };
+
+
+//     // =========================
+//     // DOUBLE TAP
+//     // =========================
+
+//     const handleDoubleTap = () => {
+
+//         const now = Date.now();
+
+//         const DOUBLE_TAP_DELAY = 300;
+
+
+//         if (
+//             lastTap.current &&
+//             now - lastTap.current < DOUBLE_TAP_DELAY
+//         ) {
+
+//             changeCard();
+
+//             lastTap.current = null;
+
+//         } else {
+
+//             lastTap.current = now;
+
+//         }
+//     };
+
+
+//     // =========================
+//     // PRESS IN
+//     // =========================
+
+//     const handlePressIn = () => {
+
+//         Animated.spring(pressScale, {
+//             toValue: 0.97,
+//             friction: 8,
+//             useNativeDriver: true,
+//         }).start();
+
+//     };
+
+
+//     // =========================
+//     // PRESS OUT
+//     // =========================
+
+//     const handlePressOut = () => {
+
+//         Animated.spring(pressScale, {
+//             toValue: 1,
+//             friction: 6,
+//             useNativeDriver: true,
+//         }).start();
+
+//     };
+
+
+//     return (
+
+//         <SafeAreaProvider>
+
+//             <SafeAreaView style={styles.container}>
+
+//                 {/* =========================
+//             HEADER
+//         ========================= */}
+
+//                 <View style={styles.header}>
+
+//                     <View>
+
+//                         <Text style={styles.smallTitle}>
+//                             Discover
+//                         </Text>
+
+//                         <Text style={styles.title}>
+//                             Explore Food
+//                         </Text>
+
+//                     </View>
+
+
+//                     <View style={styles.counter}>
+
+//                         <Text style={styles.counterText}>
+//                             {currentIndex + 1}
+//                             <Text style={styles.counterTotal}>
+//                                 {' / '}
+//                                 {CARD_DATA.length}
+//                             </Text>
+//                         </Text>
+
+//                     </View>
+
+//                 </View>
+
+
+//                 {/* =========================
+//             HINT
+//         ========================= */}
+
+//                 <View style={styles.hintContainer}>
+
+//                     <Text style={styles.hintIcon}>
+//                         ✨
+//                     </Text>
+
+//                     <Text style={styles.hintText}>
+//                         Double tap or long press to discover more
+//                     </Text>
+
+//                 </View>
+
+
+//                 {/* =========================
+//             CARD
+//         ========================= */}
+
+//                 <Animated.View
+//                     style={[
+//                         styles.cardWrapper,
+
+//                         {
+//                             opacity: fadeAnim,
+
+//                             transform: [
+//                                 {
+//                                     translateX: translateXAnim,
+//                                 },
+
+//                                 {
+//                                     scale: Animated.multiply(
+//                                         scaleAnim,
+//                                         pressScale
+//                                     ),
+//                                 },
+//                             ],
+//                         },
+//                     ]}
+//                 >
+
+//                     <Pressable
+//                         onPress={handleDoubleTap}
+//                         onLongPress={changeCard}
+//                         delayLongPress={600}
+//                         onPressIn={handlePressIn}
+//                         onPressOut={handlePressOut}
+//                         style={styles.card}
+//                     >
+
+//                         {/* IMAGE */}
+
+//                         <View style={styles.imageContainer}>
+
+//                             <Image
+//                                 source={currentCard.imageUrl}
+//                                 style={styles.cardImage}
+//                                 resizeMode="cover"
+//                             />
+
+
+//                             {/* Image Gradient-like overlay */}
+
+//                             <View style={styles.imageOverlay} />
+
+
+//                             {/* Category */}
+
+//                             <View style={styles.categoryBadge}>
+
+//                                 <Text style={styles.categoryText}>
+//                                     FOOD
+//                                 </Text>
+
+//                             </View>
+
+
+//                             {/* Number */}
+
+//                             <View style={styles.numberBadge}>
+
+//                                 <Text style={styles.numberText}>
+//                                     {currentIndex + 1}
+//                                 </Text>
+
+//                             </View>
+
+//                         </View>
+
+
+//                         {/* CARD BODY */}
+
+//                         <View style={styles.cardBody}>
+
+//                             <Text
+//                                 style={styles.cardTitle}
+//                                 numberOfLines={2}
+//                             >
+//                                 {currentCard.title}
+//                             </Text>
+
+
+//                             <Text
+//                                 style={styles.cardDescription}
+//                                 numberOfLines={4}
+//                             >
+//                                 {currentCard.description}
+//                             </Text>
+
+
+//                             {/* FOOTER */}
+
+//                             <View style={styles.cardFooter}>
+
+//                                 <View style={styles.readTime}>
+
+//                                     <Text style={styles.readIcon}>
+//                                         ⏱
+//                                     </Text>
+
+//                                     <Text style={styles.readText}>
+//                                         5 min read
+//                                     </Text>
+
+//                                 </View>
+
+
+//                                 <View style={styles.arrowButton}>
+
+//                                     <Text style={styles.arrow}>
+//                                         →
+//                                     </Text>
+
+//                                 </View>
+
+//                             </View>
+
+//                         </View>
+
+//                     </Pressable>
+
+//                 </Animated.View>
+
+
+//                 {/* =========================
+//             PROGRESS
+//         ========================= */}
+
+//                 <View style={styles.progressContainer}>
+
+//                     {CARD_DATA.map((_, index) => (
+
+//                         <View
+//                             key={index}
+//                             style={[
+//                                 styles.progressDot,
+
+//                                 index === currentIndex &&
+//                                 styles.activeProgressDot,
+//                             ]}
+//                         />
+
+//                     ))}
+
+//                 </View>
+
+
+//                 {/* =========================
+//             BOTTOM TEXT
+//         ========================= */}
+
+//                 <Text style={styles.bottomText}>
+//                     Discover something new every time
+//                 </Text>
+
+//             </SafeAreaView>
+
+//         </SafeAreaProvider>
+
+//     );
+// }
+
+
+// const styles = StyleSheet.create({
+
+//     // =========================
+//     // SCREEN
+//     // =========================
+
+//     container: {
+//         flex: 1,
+
+//         backgroundColor: '#F5F7FC',
+
+//         alignItems: 'center',
+//     },
+
+
+//     // =========================
+//     // HEADER
+//     // =========================
+
+//     header: {
+
+//         width: '100%',
+
+//         paddingHorizontal: 24,
+//         paddingTop: 15,
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         justifyContent: 'space-between',
+//     },
+
+
+//     smallTitle: {
+
+//         fontSize: 13,
+
+//         fontWeight: '600',
+
+//         color: '#7B8195',
+
+//         marginBottom: 3,
+//     },
+
+
+//     title: {
+
+//         fontSize: 25,
+
+//         fontWeight: '800',
+
+//         color: '#1F2965',
+//     },
+
+
+//     counter: {
+
+//         paddingHorizontal: 13,
+//         paddingVertical: 8,
+
+//         borderRadius: 20,
+
+//         backgroundColor: '#E9ECFA',
+//     },
+
+
+//     counterText: {
+
+//         fontSize: 13,
+
+//         fontWeight: '800',
+
+//         color: '#1F2965',
+//     },
+
+
+//     counterTotal: {
+
+//         fontWeight: '500',
+
+//         color: '#8A8FA5',
+//     },
+
+
+//     // =========================
+//     // HINT
+//     // =========================
+
+//     hintContainer: {
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         marginTop: 18,
+//         marginBottom: 14,
+//     },
+
+
+//     hintIcon: {
+
+//         fontSize: 14,
+
+//         marginRight: 6,
+//     },
+
+
+//     hintText: {
+
+//         fontSize: 12,
+
+//         color: '#858A9D',
+
+//         fontWeight: '500',
+//     },
+
+
+//     // =========================
+//     // CARD
+//     // =========================
+
+//     cardWrapper: {
+
+//         width: width * 0.87,
+
+//         height: height * 0.64,
+
+//         borderRadius: 26,
+
+//         shadowColor: '#000',
+
+//         shadowOffset: {
+//             width: 0,
+//             height: 12,
+//         },
+
+//         shadowOpacity: 0.16,
+
+//         shadowRadius: 22,
+
+//         elevation: 10,
+//     },
+
+
+//     card: {
+
+//         flex: 1,
+
+//         overflow: 'hidden',
+
+//         borderRadius: 26,
+
+//         backgroundColor: '#FFFFFF',
+//     },
+
+
+//     // =========================
+//     // IMAGE
+//     // =========================
+
+//     imageContainer: {
+
+//         height: '55%',
+
+//         position: 'relative',
+//     },
+
+
+//     cardImage: {
+
+//         width: '100%',
+
+//         height: '100%',
+//     },
+
+
+//     imageOverlay: {
+
+//         position: 'absolute',
+
+//         left: 0,
+//         right: 0,
+//         bottom: 0,
+
+//         height: 100,
+
+//         backgroundColor: 'rgba(0,0,0,0.18)',
+//     },
+
+
+//     categoryBadge: {
+
+//         position: 'absolute',
+
+//         top: 16,
+//         left: 16,
+
+//         paddingHorizontal: 12,
+//         paddingVertical: 7,
+
+//         borderRadius: 20,
+
+//         backgroundColor: 'rgba(255,255,255,0.9)',
+//     },
+
+
+//     categoryText: {
+
+//         fontSize: 10,
+
+//         fontWeight: '800',
+
+//         letterSpacing: 1,
+
+//         color: '#1F2965',
+//     },
+
+
+//     numberBadge: {
+
+//         position: 'absolute',
+
+//         right: 16,
+//         top: 16,
+
+//         width: 36,
+//         height: 36,
+
+//         borderRadius: 18,
+
+//         alignItems: 'center',
+//         justifyContent: 'center',
+
+//         backgroundColor: 'rgba(31,41,101,0.85)',
+//     },
+
+
+//     numberText: {
+
+//         fontSize: 13,
+
+//         fontWeight: '800',
+
+//         color: '#FFFFFF',
+//     },
+
+
+//     // =========================
+//     // BODY
+//     // =========================
+
+//     cardBody: {
+
+//         flex: 1,
+
+//         padding: 20,
+
+//         justifyContent: 'space-between',
+//     },
+
+
+//     cardTitle: {
+
+//         fontSize: 24,
+
+//         fontWeight: '800',
+
+
+//         color: '#1B2140',
+
+//         lineHeight: 30,
+//     },
+
+
+//     cardDescription: {
+
+//         marginTop: 8,
+
+//         fontSize: 14,
+
+//         lineHeight: 21,
+
+//         color: '#71768A',
+//     },
+
+
+//     // =========================
+//     // FOOTER
+//     // =========================
+
+//     cardFooter: {
+
+//         marginTop: 15,
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         justifyContent: 'space-between',
+//     },
+
+
+//     readTime: {
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+//     },
+
+
+//     readIcon: {
+
+//         fontSize: 14,
+
+//         marginRight: 6,
+//     },
+
+
+//     readText: {
+
+//         fontSize: 12,
+
+//         fontWeight: '600',
+
+//         color: '#8A8FA0',
+//     },
+
+
+//     arrowButton: {
+
+//         width: 42,
+//         height: 42,
+
+//         borderRadius: 21,
+
+//         alignItems: 'center',
+//         justifyContent: 'center',
+
+//         backgroundColor: '#1F2965',
+//     },
+
+
+//     arrow: {
+
+//         fontSize: 20,
+
+//         fontWeight: '600',
+
+//         color: '#FFFFFF',
+//     },
+
+
+//     // =========================
+//     // PROGRESS
+//     // =========================
+
+//     progressContainer: {
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         marginTop: 18,
+//     },
+
+
+//     progressDot: {
+
+//         width: 7,
+//         height: 7,
+
+//         borderRadius: 4,
+
+//         marginHorizontal: 4,
+
+//         backgroundColor: '#D5D8E4',
+//     },
+
+
+//     activeProgressDot: {
+
+//         width: 24,
+
+//         backgroundColor: '#1F2965',
+//     },
+
+
+//     // =========================
+//     // BOTTOM
+//     // =========================
+
+//     bottomText: {
+
+//         marginTop: 10,
+
+//         fontSize: 11,
+
+//         color: '#9A9EAF',
+
+//         fontWeight: '500',
+//     },
+
+// });
+
+
+
+
+
+
+
+
+// Version Two
+
+
+
+
+
+// import React, { useRef, useState } from 'react';
+
+// import {
+//     StyleSheet,
+//     Text,
+//     View,
+//     Image,
+//     Pressable,
+//     Dimensions,
+//     Animated,
+//     Easing,
+// } from 'react-native';
+
+// import {
+//     SafeAreaProvider,
+//     SafeAreaView,
+// } from 'react-native-safe-area-context';
+
+
+// const { width, height } = Dimensions.get('window');
+
+
+// // =========================
+// // CARD DATA
+// // =========================
+
+// const CARD_DATA = [
+//     {
+//         id: 1,
+//         title: 'Food One',
+//         description:
+//             'এখানে আপনার প্রথম কার্ডের বিস্তারিত ডেসক্রিপশন থাকবে। আপনি রিয়েক্ট ন্যাটিভ দিয়ে চমৎকার ইউজার এক্সপিরিয়েন্স তৈরি করছেন।',
+//         imageUrl: require('../assets/bcimage.jpeg'),
+//     },
+
+//     {
+//         id: 2,
+//         title: 'Food Two',
+//         description:
+//             'এটি দ্বিতীয় কার্ডের ডেসক্রিপশন। ডাবল ট্যাপ বা লং প্রেস করার কারণে আপনি এই কন্টেন্টটি দেখতে পাচ্ছেন।',
+//         imageUrl: require('../assets/natureimages.jpeg'),
+//     },
+
+//     {
+//         id: 3,
+//         title: 'Food Three',
+//         description:
+//             'চমৎকার! আপনি সফলভাবে তৃতীয় কার্ডে চলে এসেছেন। ডাটা শেষ হয়ে গেলে এটি আবার প্রথম কার্ডে ফিরে যাবে।',
+//         imageUrl: require('../assets/skyimages.jpeg'),
+//     },
+
+//     {
+//         id: 4,
+//         title: 'Food Four',
+//         description:
+//             'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+//         imageUrl: require('../assets/hillnatureimages.jpeg'),
+//     },
+// ];
+
+
+// export default function App() {
+
+//     const [currentIndex, setCurrentIndex] = useState(0);
+
+//     const currentCard = CARD_DATA[currentIndex];
+
+
+//     // =========================
+//     // ANIMATION VALUES
+//     // =========================
+
+//     const fadeAnim = useRef(
+//         new Animated.Value(1)
+//     ).current;
+
+//     const scaleAnim = useRef(
+//         new Animated.Value(1)
+//     ).current;
+
+//     // Changed X to Y
+//     const translateYAnim = useRef(
+//         new Animated.Value(0)
+//     ).current;
+
+
+//     // Card press animation
+//     const pressScale = useRef(
+//         new Animated.Value(1)
+//     ).current;
+
+
+//     // Double tap timer
+//     const lastTap = useRef(null);
+
+
+//     // =========================
+//     // CHANGE CARD ANIMATION
+//     // =========================
+
+//     const changeCard = () => {
+
+//         // First: animate current card out
+//         Animated.parallel([
+
+//             // Fade out
+//             Animated.timing(fadeAnim, {
+//                 toValue: 0,
+//                 duration: 180,
+//                 easing: Easing.out(Easing.ease),
+//                 useNativeDriver: true,
+//             }),
+
+//             // Scale down
+//             Animated.timing(scaleAnim, {
+//                 toValue: 0.92,
+//                 duration: 180,
+//                 easing: Easing.out(Easing.ease),
+//                 useNativeDriver: true,
+//             }),
+
+//             // Move current card UP
+//             Animated.timing(translateYAnim, {
+//                 toValue: -40,
+//                 duration: 180,
+//                 easing: Easing.out(Easing.ease),
+//                 useNativeDriver: true,
+//             }),
+
+//         ]).start(() => {
+
+//             // Change card
+//             setCurrentIndex(
+//                 prevIndex =>
+//                     prevIndex === CARD_DATA.length - 1
+//                         ? 0
+//                         : prevIndex + 1
+//             );
+
+
+//             // =========================
+//             // PREPARE NEW CARD
+//             // =========================
+
+//             // New card starts from BOTTOM
+//             translateYAnim.setValue(80);
+
+//             scaleAnim.setValue(0.96);
+
+
+//             // Animate new card from BOTTOM to CENTER
+//             Animated.parallel([
+
+//                 // Fade in
+//                 Animated.timing(fadeAnim, {
+//                     toValue: 1,
+//                     duration: 500,
+//                     easing: Easing.out(Easing.cubic),
+//                     useNativeDriver: true,
+//                 }),
+
+//                 // Scale up
+//                 Animated.spring(scaleAnim, {
+//                     toValue: 1,
+//                     friction: 7,
+//                     tension: 50,
+//                     useNativeDriver: true,
+//                 }),
+
+//                 // Move from BOTTOM to CENTER
+//                 Animated.timing(translateYAnim, {
+//                     toValue: 0,
+//                     duration: 2500,
+//                     easing: Easing.out(Easing.cubic),
+//                     useNativeDriver: true,
+//                 }),
+
+//             ]).start();
+
+//         });
+//     };
+
+
+//     // =========================
+//     // DOUBLE TAP
+//     // =========================
+
+//     const handleDoubleTap = () => {
+
+//         const now = Date.now();
+
+//         const DOUBLE_TAP_DELAY = 300;
+
+
+//         if (
+//             lastTap.current &&
+//             now - lastTap.current < DOUBLE_TAP_DELAY
+//         ) {
+
+//             changeCard();
+
+//             lastTap.current = null;
+
+//         } else {
+
+//             lastTap.current = now;
+
+//         }
+//     };
+
+
+//     // =========================
+//     // PRESS IN
+//     // =========================
+
+//     const handlePressIn = () => {
+
+//         Animated.spring(pressScale, {
+//             toValue: 0.97,
+//             friction: 8,
+//             useNativeDriver: true,
+//         }).start();
+
+//     };
+
+
+//     // =========================
+//     // PRESS OUT
+//     // =========================
+
+//     const handlePressOut = () => {
+
+//         Animated.spring(pressScale, {
+//             toValue: 1,
+//             friction: 6,
+//             useNativeDriver: true,
+//         }).start();
+
+//     };
+
+
+//     return (
+
+//         <SafeAreaProvider>
+
+//             <SafeAreaView style={styles.container}>
+
+//                 {/* =========================
+//                     HEADER
+//                 ========================= */}
+
+//                 <View style={styles.header}>
+
+//                     <View>
+
+//                         <Text style={styles.smallTitle}>
+//                             Discover
+//                         </Text>
+
+//                         <Text style={styles.title}>
+//                             Explore Food
+//                         </Text>
+
+//                     </View>
+
+
+//                     <View style={styles.counter}>
+
+//                         <Text style={styles.counterText}>
+
+//                             {currentIndex + 1}
+
+//                             <Text style={styles.counterTotal}>
+//                                 {' / '}
+//                                 {CARD_DATA.length}
+//                             </Text>
+
+//                         </Text>
+
+//                     </View>
+
+//                 </View>
+
+
+//                 {/* =========================
+//                     HINT
+//                 ========================= */}
+
+//                 <View style={styles.hintContainer}>
+
+//                     <Text style={styles.hintIcon}>
+//                         ✨
+//                     </Text>
+
+//                     <Text style={styles.hintText}>
+//                         Double tap or long press to discover more
+//                     </Text>
+
+//                 </View>
+
+
+//                 {/* =========================
+//                     CARD
+//                 ========================= */}
+
+//                 <Animated.View
+//                     style={[
+//                         styles.cardWrapper,
+
+//                         {
+//                             opacity: fadeAnim,
+
+//                             transform: [
+
+//                                 // Changed translateX to translateY
+//                                 {
+//                                     translateY: translateYAnim,
+//                                 },
+
+//                                 {
+//                                     scale: Animated.multiply(
+//                                         scaleAnim,
+//                                         pressScale
+//                                     ),
+//                                 },
+
+//                             ],
+//                         },
+//                     ]}
+//                 >
+
+//                     <Pressable
+//                         onPress={handleDoubleTap}
+//                         onLongPress={changeCard}
+//                         delayLongPress={600}
+//                         onPressIn={handlePressIn}
+//                         onPressOut={handlePressOut}
+//                         style={styles.card}
+//                     >
+
+//                         {/* =========================
+//                             IMAGE
+//                         ========================= */}
+
+//                         <View style={styles.imageContainer}>
+
+//                             <Image
+//                                 source={currentCard.imageUrl}
+//                                 style={styles.cardImage}
+//                                 resizeMode="cover"
+//                             />
+
+
+//                             {/* Image Overlay */}
+
+//                             <View style={styles.imageOverlay} />
+
+
+//                             {/* Category */}
+
+//                             <View style={styles.categoryBadge}>
+
+//                                 <Text style={styles.categoryText}>
+//                                     FOOD
+//                                 </Text>
+
+//                             </View>
+
+
+//                             {/* Number */}
+
+//                             <View style={styles.numberBadge}>
+
+//                                 <Text style={styles.numberText}>
+//                                     {currentIndex + 1}
+//                                 </Text>
+
+//                             </View>
+
+//                         </View>
+
+
+//                         {/* =========================
+//                             CARD BODY
+//                         ========================= */}
+
+//                         <View style={styles.cardBody}>
+
+//                             <Text
+//                                 style={styles.cardTitle}
+//                                 numberOfLines={2}
+//                             >
+//                                 {currentCard.title}
+//                             </Text>
+
+
+//                             <Text
+//                                 style={styles.cardDescription}
+//                                 numberOfLines={4}
+//                             >
+//                                 {currentCard.description}
+//                             </Text>
+
+
+//                             {/* =========================
+//                                 FOOTER
+//                             ========================= */}
+
+//                             <View style={styles.cardFooter}>
+
+//                                 <View style={styles.readTime}>
+
+//                                     <Text style={styles.readIcon}>
+//                                         ⏱
+//                                     </Text>
+
+//                                     <Text style={styles.readText}>
+//                                         5 min read
+//                                     </Text>
+
+//                                 </View>
+
+
+//                                 <View style={styles.arrowButton}>
+
+//                                     <Text style={styles.arrow}>
+//                                         →
+//                                     </Text>
+
+//                                 </View>
+
+//                             </View>
+
+//                         </View>
+
+//                     </Pressable>
+
+//                 </Animated.View>
+
+
+//                 {/* =========================
+//                     PROGRESS
+//                 ========================= */}
+
+//                 <View style={styles.progressContainer}>
+
+//                     {CARD_DATA.map((_, index) => (
+
+//                         <View
+//                             key={index}
+//                             style={[
+//                                 styles.progressDot,
+
+//                                 index === currentIndex &&
+//                                 styles.activeProgressDot,
+//                             ]}
+//                         />
+
+//                     ))}
+
+//                 </View>
+
+
+//                 {/* =========================
+//                     BOTTOM TEXT
+//                 ========================= */}
+
+//                 <Text style={styles.bottomText}>
+//                     Discover something new every time
+//                 </Text>
+
+//             </SafeAreaView>
+
+//         </SafeAreaProvider>
+
+//     );
+// }
+
+
+// const styles = StyleSheet.create({
+
+//     // =========================
+//     // SCREEN
+//     // =========================
+
+//     container: {
+//         flex: 1,
+
+//         backgroundColor: '#F5F7FC',
+
+//         alignItems: 'center',
+//     },
+
+
+//     // =========================
+//     // HEADER
+//     // =========================
+
+//     header: {
+
+//         width: '100%',
+
+//         paddingHorizontal: 24,
+//         paddingTop: 15,
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         justifyContent: 'space-between',
+//     },
+
+
+//     smallTitle: {
+
+//         fontSize: 13,
+
+//         fontWeight: '600',
+
+//         color: '#7B8195',
+
+//         marginBottom: 3,
+//     },
+
+
+//     title: {
+
+//         fontSize: 25,
+
+//         fontWeight: '800',
+
+//         color: '#1F2965',
+//     },
+
+
+//     counter: {
+
+//         paddingHorizontal: 13,
+//         paddingVertical: 8,
+
+//         borderRadius: 20,
+
+//         backgroundColor: '#E9ECFA',
+//     },
+
+
+//     counterText: {
+
+//         fontSize: 13,
+
+//         fontWeight: '800',
+
+//         color: '#1F2965',
+//     },
+
+
+//     counterTotal: {
+
+//         fontWeight: '500',
+
+//         color: '#8A8FA5',
+//     },
+
+
+//     // =========================
+//     // HINT
+//     // =========================
+
+//     hintContainer: {
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         marginTop: 18,
+//         marginBottom: 14,
+//     },
+
+
+//     hintIcon: {
+
+//         fontSize: 14,
+
+//         marginRight: 6,
+//     },
+
+
+//     hintText: {
+
+//         fontSize: 12,
+
+//         color: '#858A9D',
+
+//         fontWeight: '500',
+//     },
+
+
+//     // =========================
+//     // CARD
+//     // =========================
+
+//     cardWrapper: {
+
+//         width: width * 0.87,
+
+//         height: height * 0.64,
+
+//         borderRadius: 26,
+
+//         shadowColor: '#000',
+
+//         shadowOffset: {
+//             width: 0,
+//             height: 12,
+//         },
+
+//         shadowOpacity: 0.16,
+
+//         shadowRadius: 22,
+
+//         elevation: 10,
+//     },
+
+
+//     card: {
+
+//         flex: 1,
+
+//         overflow: 'hidden',
+
+//         borderRadius: 26,
+
+//         backgroundColor: '#FFFFFF',
+//     },
+
+
+//     // =========================
+//     // IMAGE
+//     // =========================
+
+//     imageContainer: {
+
+//         height: '55%',
+
+//         position: 'relative',
+//     },
+
+
+//     cardImage: {
+
+//         width: '100%',
+
+//         height: '100%',
+//     },
+
+
+//     imageOverlay: {
+
+//         position: 'absolute',
+
+//         left: 0,
+//         right: 0,
+//         bottom: 0,
+
+//         height: 100,
+
+//         backgroundColor: 'rgba(0,0,0,0.18)',
+//     },
+
+
+//     categoryBadge: {
+
+//         position: 'absolute',
+
+//         top: 16,
+//         left: 16,
+
+//         paddingHorizontal: 12,
+//         paddingVertical: 7,
+
+//         borderRadius: 20,
+
+//         backgroundColor: 'rgba(255,255,255,0.9)',
+//     },
+
+
+//     categoryText: {
+
+//         fontSize: 10,
+
+//         fontWeight: '800',
+
+//         letterSpacing: 1,
+
+//         color: '#1F2965',
+//     },
+
+
+//     numberBadge: {
+
+//         position: 'absolute',
+
+//         right: 16,
+//         top: 16,
+
+//         width: 36,
+//         height: 36,
+
+//         borderRadius: 18,
+
+//         alignItems: 'center',
+//         justifyContent: 'center',
+
+//         backgroundColor: 'rgba(31,41,101,0.85)',
+//     },
+
+
+//     numberText: {
+
+//         fontSize: 13,
+
+//         fontWeight: '800',
+
+//         color: '#FFFFFF',
+//     },
+
+
+//     // =========================
+//     // BODY
+//     // =========================
+
+//     cardBody: {
+
+//         flex: 1,
+
+//         padding: 20,
+
+//         justifyContent: 'space-between',
+//     },
+
+
+//     cardTitle: {
+
+//         fontSize: 24,
+
+//         fontWeight: '800',
+
+//         color: '#1B2140',
+
+//         lineHeight: 30,
+//     },
+
+
+//     cardDescription: {
+
+//         marginTop: 8,
+
+//         fontSize: 14,
+
+//         lineHeight: 21,
+
+//         color: '#71768A',
+//     },
+
+
+//     // =========================
+//     // FOOTER
+//     // =========================
+
+//     cardFooter: {
+
+//         marginTop: 15,
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         justifyContent: 'space-between',
+//     },
+
+
+//     readTime: {
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+//     },
+
+
+//     readIcon: {
+
+//         fontSize: 14,
+
+//         marginRight: 6,
+//     },
+
+
+//     readText: {
+
+//         fontSize: 12,
+
+//         fontWeight: '600',
+
+//         color: '#8A8FA0',
+//     },
+
+
+//     arrowButton: {
+
+//         width: 42,
+//         height: 42,
+
+//         borderRadius: 21,
+
+//         alignItems: 'center',
+//         justifyContent: 'center',
+
+//         backgroundColor: '#1F2965',
+//     },
+
+
+//     arrow: {
+
+//         fontSize: 20,
+
+//         fontWeight: '600',
+
+//         color: '#FFFFFF',
+//     },
+
+
+//     // =========================
+//     // PROGRESS
+//     // =========================
+
+//     progressContainer: {
+
+//         flexDirection: 'row',
+
+//         alignItems: 'center',
+
+//         marginTop: 18,
+//     },
+
+
+//     progressDot: {
+
+//         width: 7,
+//         height: 7,
+
+//         borderRadius: 4,
+
+//         marginHorizontal: 4,
+
+//         backgroundColor: '#D5D8E4',
+//     },
+
+
+//     activeProgressDot: {
+
+//         width: 24,
+
+//         backgroundColor: '#1F2965',
+//     },
+
+
+//     // =========================
+//     // BOTTOM
+//     // =========================
+
+//     bottomText: {
+
+//         marginTop: 10,
+
+//         fontSize: 11,
+
+//         color: '#9A9EAF',
+
+//         fontWeight: '500',
+//     },
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+// Version Three
+
+
+
+
+
 import React, { useRef, useState } from 'react';
 
 import {
@@ -510,6 +2284,7 @@ import {
     Dimensions,
     Animated,
     Easing,
+    ScrollView,
 } from 'react-native';
 
 import {
@@ -539,7 +2314,7 @@ const CARD_DATA = [
         title: 'Food Two',
         description:
             'এটি দ্বিতীয় কার্ডের ডেসক্রিপশন। ডাবল ট্যাপ বা লং প্রেস করার কারণে আপনি এই কন্টেন্টটি দেখতে পাচ্ছেন।',
-        imageUrl: require('../assets/bcimage.jpeg'),
+        imageUrl: require('../assets/natureimages.jpeg'),
     },
 
     {
@@ -547,7 +2322,7 @@ const CARD_DATA = [
         title: 'Food Three',
         description:
             'চমৎকার! আপনি সফলভাবে তৃতীয় কার্ডে চলে এসেছেন। ডাটা শেষ হয়ে গেলে এটি আবার প্রথম কার্ডে ফিরে যাবে।',
-        imageUrl: require('../assets/bcimage.jpeg'),
+        imageUrl: require('../assets/skyimages.jpeg'),
     },
 
     {
@@ -555,7 +2330,7 @@ const CARD_DATA = [
         title: 'Food Four',
         description:
             'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
-        imageUrl: require('../assets/bcimage.jpeg'),
+        imageUrl: require('../assets/hillnatureimages.jpeg'),
     },
 ];
 
@@ -564,110 +2339,63 @@ export default function App() {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const currentCard = CARD_DATA[currentIndex];
+    const scrollRef = useRef(null);
+
+    const scrollPosition = useRef(0);
+
+    const lastTap = useRef(null);
 
 
     // =========================
-    // ANIMATION VALUES
+    // CARD SIZE
     // =========================
 
-    const fadeAnim = useRef(
-        new Animated.Value(1)
-    ).current;
-
-    const scaleAnim = useRef(
-        new Animated.Value(1)
-    ).current;
-
-    const translateXAnim = useRef(
-        new Animated.Value(0)
-    ).current;
+    const CARD_HEIGHT = height * 0.64;
 
 
-    // Card press animation
+    // =========================
+    // PRESS ANIMATION
+    // =========================
+
     const pressScale = useRef(
         new Animated.Value(1)
     ).current;
 
 
-    // Double tap timer
-    // const lastTap = useRef(null).current;
-    const lastTap = useRef(null);
-
-
     // =========================
-    // CHANGE CARD ANIMATION
+    // SCROLL TO NEXT CARD
     // =========================
 
-    const changeCard = () => {
+    const scrollToNextCard = () => {
 
-        // First: animate current card out
-        Animated.parallel([
-
-            Animated.timing(fadeAnim, {
-                toValue: 0,
-                duration: 180,
-                easing: Easing.out(Easing.ease),
-                useNativeDriver: true,
-            }),
-
-            Animated.timing(scaleAnim, {
-                toValue: 0.92,
-                duration: 180,
-                easing: Easing.out(Easing.ease),
-                useNativeDriver: true,
-            }),
-
-            Animated.timing(translateXAnim, {
-                toValue: -40,
-                duration: 180,
-                easing: Easing.out(Easing.ease),
-                useNativeDriver: true,
-            }),
-
-        ]).start(() => {
-
-            // Change card
-            setCurrentIndex(
-                prevIndex =>
-                    prevIndex === CARD_DATA.length - 1
-                        ? 0
-                        : prevIndex + 1
-            );
+        const nextIndex =
+            currentIndex === CARD_DATA.length - 1
+                ? 0
+                : currentIndex + 1;
 
 
-            // Prepare new card
-            translateXAnim.setValue(40);
-            scaleAnim.setValue(0.92);
+        const nextPosition =
+            nextIndex * (CARD_HEIGHT + 20);
 
 
-            // Animate new card in
-            Animated.parallel([
+        // If last card, go back to first card
+        if (currentIndex === CARD_DATA.length - 1) {
 
-                Animated.timing(fadeAnim, {
-                    toValue: 1,
-                    duration: 350,
-                    easing: Easing.out(Easing.cubic),
-                    useNativeDriver: true,
-                }),
+            scrollRef.current?.scrollTo({
+                y: 0,
+                animated: true,
+            });
 
-                Animated.spring(scaleAnim, {
-                    toValue: 1,
-                    friction: 7,
-                    tension: 50,
-                    useNativeDriver: true,
-                }),
+        } else {
 
-                Animated.timing(translateXAnim, {
-                    toValue: 0,
-                    duration: 350,
-                    easing: Easing.out(Easing.cubic),
-                    useNativeDriver: true,
-                }),
+            scrollRef.current?.scrollTo({
+                y: nextPosition,
+                animated: true,
+            });
 
-            ]).start();
+        }
 
-        });
+        setCurrentIndex(nextIndex);
     };
 
 
@@ -687,7 +2415,7 @@ export default function App() {
             now - lastTap.current < DOUBLE_TAP_DELAY
         ) {
 
-            changeCard();
+            scrollToNextCard();
 
             lastTap.current = null;
 
@@ -729,6 +2457,36 @@ export default function App() {
     };
 
 
+    // =========================
+    // MANUAL SCROLL
+    // =========================
+
+    const handleScroll = (event) => {
+
+        const y =
+            event.nativeEvent.contentOffset.y;
+
+        scrollPosition.current = y;
+
+
+        const calculatedIndex = Math.round(
+            y / (CARD_HEIGHT + 20)
+        );
+
+
+        if (
+            calculatedIndex >= 0 &&
+            calculatedIndex < CARD_DATA.length &&
+            calculatedIndex !== currentIndex
+        ) {
+
+            setCurrentIndex(calculatedIndex);
+
+        }
+
+    };
+
+
     return (
 
         <SafeAreaProvider>
@@ -736,8 +2494,8 @@ export default function App() {
             <SafeAreaView style={styles.container}>
 
                 {/* =========================
-            HEADER
-        ========================= */}
+                    HEADER
+                ========================= */}
 
                 <View style={styles.header}>
 
@@ -757,11 +2515,14 @@ export default function App() {
                     <View style={styles.counter}>
 
                         <Text style={styles.counterText}>
+
                             {currentIndex + 1}
+
                             <Text style={styles.counterTotal}>
                                 {' / '}
                                 {CARD_DATA.length}
                             </Text>
+
                         </Text>
 
                     </View>
@@ -770,8 +2531,8 @@ export default function App() {
 
 
                 {/* =========================
-            HINT
-        ========================= */}
+                    HINT
+                ========================= */}
 
                 <View style={styles.hintContainer}>
 
@@ -787,138 +2548,163 @@ export default function App() {
 
 
                 {/* =========================
-            CARD
-        ========================= */}
+                    SCROLLABLE CARDS
+                ========================= */}
 
-                <Animated.View
-                    style={[
-                        styles.cardWrapper,
+                <ScrollView
+                    ref={scrollRef}
 
-                        {
-                            opacity: fadeAnim,
+                    showsVerticalScrollIndicator={false}
 
-                            transform: [
-                                {
-                                    translateX: translateXAnim,
-                                },
+                    onScroll={handleScroll}
 
-                                {
-                                    scale: Animated.multiply(
-                                        scaleAnim,
-                                        pressScale
-                                    ),
-                                },
-                            ],
-                        },
-                    ]}
+                    scrollEventThrottle={16}
+
+                    contentContainerStyle={styles.scrollContent}
                 >
 
-                    <Pressable
-                        onPress={handleDoubleTap}
-                        onLongPress={changeCard}
-                        delayLongPress={600}
-                        onPressIn={handlePressIn}
-                        onPressOut={handlePressOut}
-                        style={styles.card}
-                    >
+                    {CARD_DATA.map((card, index) => (
 
-                        {/* IMAGE */}
+                        <Animated.View
+                            key={card.id}
+                            style={[
+                                styles.cardWrapper,
 
-                        <View style={styles.imageContainer}>
+                                {
+                                    transform: [
+                                        {
+                                            scale:
+                                                index === currentIndex
+                                                    ? pressScale
+                                                    : 1,
+                                        },
+                                    ],
+                                },
+                            ]}
+                        >
 
-                            <Image
-                                source={currentCard.imageUrl}
-                                style={styles.cardImage}
-                                resizeMode="cover"
-                            />
+                            <Pressable
 
+                                onPress={handleDoubleTap}
 
-                            {/* Image Gradient-like overlay */}
+                                onLongPress={scrollToNextCard}
 
-                            <View style={styles.imageOverlay} />
+                                delayLongPress={600}
 
+                                onPressIn={handlePressIn}
 
-                            {/* Category */}
+                                onPressOut={handlePressOut}
 
-                            <View style={styles.categoryBadge}>
-
-                                <Text style={styles.categoryText}>
-                                    FOOD
-                                </Text>
-
-                            </View>
-
-
-                            {/* Number */}
-
-                            <View style={styles.numberBadge}>
-
-                                <Text style={styles.numberText}>
-                                    {currentIndex + 1}
-                                </Text>
-
-                            </View>
-
-                        </View>
-
-
-                        {/* CARD BODY */}
-
-                        <View style={styles.cardBody}>
-
-                            <Text
-                                style={styles.cardTitle}
-                                numberOfLines={2}
+                                style={styles.card}
                             >
-                                {currentCard.title}
-                            </Text>
+
+                                {/* =========================
+                                    IMAGE
+                                ========================= */}
+
+                                <View style={styles.imageContainer}>
+
+                                    <Image
+                                        source={card.imageUrl}
+                                        style={styles.cardImage}
+                                        resizeMode="cover"
+                                    />
 
 
-                            <Text
-                                style={styles.cardDescription}
-                                numberOfLines={4}
-                            >
-                                {currentCard.description}
-                            </Text>
+                                    {/* Image Overlay */}
+
+                                    <View style={styles.imageOverlay} />
 
 
-                            {/* FOOTER */}
+                                    {/* Category */}
 
-                            <View style={styles.cardFooter}>
+                                    <View style={styles.categoryBadge}>
 
-                                <View style={styles.readTime}>
+                                        <Text style={styles.categoryText}>
+                                            FOOD
+                                        </Text>
 
-                                    <Text style={styles.readIcon}>
-                                        ⏱
-                                    </Text>
+                                    </View>
 
-                                    <Text style={styles.readText}>
-                                        5 min read
-                                    </Text>
+
+                                    {/* Number */}
+
+                                    <View style={styles.numberBadge}>
+
+                                        <Text style={styles.numberText}>
+                                            {index + 1}
+                                        </Text>
+
+                                    </View>
 
                                 </View>
 
 
-                                <View style={styles.arrowButton}>
+                                {/* =========================
+                                    CARD BODY
+                                ========================= */}
 
-                                    <Text style={styles.arrow}>
-                                        →
+                                <View style={styles.cardBody}>
+
+                                    <Text
+                                        style={styles.cardTitle}
+                                        numberOfLines={2}
+                                    >
+                                        {card.title}
                                     </Text>
+
+
+                                    <Text
+                                        style={styles.cardDescription}
+                                        numberOfLines={4}
+                                    >
+                                        {card.description}
+                                    </Text>
+
+
+                                    {/* =========================
+                                        FOOTER
+                                    ========================= */}
+
+                                    <View style={styles.cardFooter}>
+
+                                        <View style={styles.readTime}>
+
+                                            <Text style={styles.readIcon}>
+                                                ⏱
+                                            </Text>
+
+                                            <Text style={styles.readText}>
+                                                5 min read
+                                            </Text>
+
+                                        </View>
+
+
+                                        <View style={styles.arrowButton}>
+
+                                            <Text style={styles.arrow}>
+                                                →
+                                            </Text>
+
+                                        </View>
+
+                                    </View>
 
                                 </View>
 
-                            </View>
+                            </Pressable>
 
-                        </View>
+                        </Animated.View>
 
-                    </Pressable>
+                    ))}
 
-                </Animated.View>
+                </ScrollView>
 
 
                 {/* =========================
-            PROGRESS
-        ========================= */}
+                    PROGRESS
+                ========================= */}
 
                 <View style={styles.progressContainer}>
 
@@ -926,6 +2712,7 @@ export default function App() {
 
                         <View
                             key={index}
+
                             style={[
                                 styles.progressDot,
 
@@ -940,8 +2727,8 @@ export default function App() {
 
 
                 {/* =========================
-            BOTTOM TEXT
-        ========================= */}
+                    BOTTOM TEXT
+                ========================= */}
 
                 <Text style={styles.bottomText}>
                     Discover something new every time
@@ -1074,14 +2861,27 @@ const styles = StyleSheet.create({
 
 
     // =========================
+    // SCROLL
+    // =========================
+
+    scrollContent: {
+
+        paddingBottom: 20,
+
+        alignItems: 'center',
+    },
+
+
+    // =========================
     // CARD
     // =========================
 
     cardWrapper: {
-
         width: width * 0.87,
 
         height: height * 0.64,
+
+        marginBottom: 20,
 
         borderRadius: 26,
 
@@ -1223,7 +3023,6 @@ const styles = StyleSheet.create({
 
         fontWeight: '800',
 
-
         color: '#1B2140',
 
         lineHeight: 30,
@@ -1318,7 +3117,7 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
 
-        marginTop: 18,
+        marginTop: 10,
     },
 
 
