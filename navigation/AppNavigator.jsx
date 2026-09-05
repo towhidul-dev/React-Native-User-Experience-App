@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeStack from './HomeStack';
+import ProfileStack from "./ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,11 +22,12 @@ const AppNavigator = () => {
 
             <Tab.Screen
                 name="Profile"
-                component={ProfileScreen}
+                component={ProfileStack}
                 options={{
                     headerShown: false,
                 }}
             />
+
         </Tab.Navigator>
     );
 };

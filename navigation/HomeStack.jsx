@@ -9,8 +9,10 @@ const Stack = createNativeStackNavigator();
 const HomeStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Homee" component={HomeScreen} />
-            <Stack.Screen name="SubHome" component={SubHomeScreen} />
+            <Stack.Screen name="Homee" component={HomeScreen} options={{
+                headerShown: false,
+            }} />
+            <Stack.Screen name="SubHome" component={SubHomeScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
     )
 }

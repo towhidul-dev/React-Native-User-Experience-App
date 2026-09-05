@@ -2332,10 +2332,52 @@ const CARD_DATA = [
             'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
         imageUrl: require('../assets/hillnatureimages.jpeg'),
     },
+    {
+        id: 5,
+        title: 'Food Five',
+        description:
+            'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+        imageUrl: require('../assets/gardenbrence.jpeg'),
+    },
+    {
+        id: 6,
+        title: 'Food Six',
+        description:
+            'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+        imageUrl: require('../assets/hillnatureimages.jpeg'),
+    },
+    {
+        id: 7,
+        title: 'Food Seven',
+        description:
+            'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+        imageUrl: require('../assets/waterfallimages.jpeg'),
+    },
+    {
+        id: 8,
+        title: 'Food Eight',
+        description:
+            'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+        imageUrl: require('../assets/hillnatureimages.jpeg'),
+    },
+    {
+        id: 9,
+        title: 'Food Nine',
+        description:
+            'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+        imageUrl: require('../assets/hillnatureimages.jpeg'),
+    },
+    {
+        id: 10,
+        title: 'Food Ten',
+        description:
+            'This is another beautiful food card. Swipe, double tap or long press to explore more content.',
+        imageUrl: require('../assets/hillnatureimages.jpeg'),
+    },
 ];
 
 
-export default function App() {
+export default function App({ navigation }) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -2596,6 +2638,7 @@ export default function App() {
                                 onPressOut={handlePressOut}
 
                                 style={styles.card}
+
                             >
 
                                 {/* =========================
@@ -2608,6 +2651,7 @@ export default function App() {
                                         source={card.imageUrl}
                                         style={styles.cardImage}
                                         resizeMode="cover"
+
                                     />
 
 
@@ -2644,7 +2688,7 @@ export default function App() {
                                     CARD BODY
                                 ========================= */}
 
-                                <View style={styles.cardBody}>
+                                <View style={styles.cardBody} >
 
                                     <Text
                                         style={styles.cardTitle}
@@ -2680,11 +2724,17 @@ export default function App() {
 
                                         </View>
 
+                                        <View>
+                                            <Text onPress={() =>
+                                                navigation.navigate('DetailsScreen')
+                                            }>Learn</Text>
+                                        </View>
+
 
                                         <View style={styles.arrowButton}>
 
                                             <Text style={styles.arrow}>
-                                                →
+                                                ↓
                                             </Text>
 
                                         </View>
